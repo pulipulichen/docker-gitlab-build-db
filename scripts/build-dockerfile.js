@@ -4,6 +4,7 @@ const path = require('path')
 const yaml = require('js-yaml')
 
 const BUILD_DIR = path.resolve('/builds/', process.env.CI_PROJECT_NAMESPACE, process.env.CI_PROJECT_NAME)
+process.chdir(BUILD_DIR);
 console.log("BUILD_DIR", BUILD_DIR)
 const valuesPath = BUILD_DIR + '/deploy/values.yaml'
 //const valuesPath = path.resolve('./values.yaml')
