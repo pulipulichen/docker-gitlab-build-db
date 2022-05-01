@@ -18,14 +18,13 @@ const config = yaml.load(valuesStr)
 console.log(config)
 
 function isDirEmpty(dirname) {
-  return fs.promises.readdir(dirname).then(files => {
-      return files.length === 0;
-  });
+  let files = fs.readdirSync(dirname)
+  return (files.length === 0)
 }
 
 if (config.database.init === false || 
       isDirEmpty(BUILD_DIR + '/database/')) {
-  console.log('Do not initialized.')
+  console.log('Do not initialized.', )
   process.exit()
 }
 
@@ -46,7 +45,6 @@ if (dockerfile) {
   fs.writeFileSync(BUILD_DIR + '/database/Dockerfile', dockerfile, 'utf8')
   console.log('created')
 }
-
 
 const { exec } = require("child_process");
 
