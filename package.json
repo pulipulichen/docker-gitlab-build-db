@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "build-push": "./build-push.sh"
+  },
+  "dependencies": {
+    "yaml-to-json": "0.3.0"
+  }
+}
