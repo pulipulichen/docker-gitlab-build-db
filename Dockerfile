@@ -1,24 +1,19 @@
-FROM docker:19.03.13
-
-ENV DEBIAN_FRONTEND=noninteractive
-
-#Creating an applicadtion directory
-#RUN mkdir /app
-#Use app directory as development directory
-#WORKDIR /app
+FROM node:18
 
 RUN apt-get update
-
-# ----------------------
-
 RUN apt-get install -y \
-    git curl
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
 
-# https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04
-RUN cd /tmp
-RUN curl -sL https://deb.nodesource.com/setup_16.x -o nodesource_setup.sh
-RUN bash nodesource_setup.sh
-RUN apt install nodejs -y
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+RUN echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+RUN apt-get update
+RUN apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
 # ---------------------
 
