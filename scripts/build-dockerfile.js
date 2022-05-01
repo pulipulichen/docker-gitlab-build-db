@@ -49,6 +49,11 @@ if (dockerfile) {
 
 const { exec } = require("child_process");
 
+process.env.UPDATE_TAG=false
+if (config.presist_data === true) {
+  process.env.UPDATE_TAG=true
+}
+
 exec("/app/scripts/build-push.sh", (error, stdout, stderr) => {
     if (error) {
         console.log(`error: ${error.message}`);
