@@ -1,12 +1,18 @@
 const fs = require('fs')
 const path = require('path')
 
-const yaml2json = require('yaml-to-json')
+const yaml = require('js-yaml');
 
-
-const valuesStr = fs.readFileSync(path.resolve(process.env.BUILD_DIR, '/deploy/values.yaml'), 'utf8')
-
-const config = yaml2json(valuesStr)
+const valuesPath = path.resolve(process.cwd(), '/deploy/values.yaml')
+//const valuesPath = path.resolve('./values.yaml')
+console.log(valuesPath)
+if (fs.existsSync(valuesPath) === false) {
+  console.error('values.yaml is not found: ', valuesPath)
+  process.exit()
+}
+const valuesStr = fs.readFileSync(valuesPath, 'utf8')
+console.log(valuesStr)
+const config = yaml.load(valuesStr)
 console.log(config)
 
 function isDirEmpty(dirname) {
@@ -16,7 +22,7 @@ function isDirEmpty(dirname) {
 }
 
 if (config.database.init === false || 
-      isDirEmpty(path.resolve(process.env.BUILD_DIR, '/database/'))) {
+      isDirEmpty(path.resolve(process.cwd(), '/database/'))) {
   console.log('Do not initialized.')
   process.exit()
 }
@@ -35,6 +41,6 @@ COPY ./database /docker-entrypoint-initdb.d`
 console.log(dockerfile)
 
 if (dockerfile) {
-  fs.writeFileSync(path.resolve(process.env.BUILD_DIR, '/database/Dockerfile'), dockerfile, 'utf8')
+  fs.writeFileSync(path.resolve(process.cwd(), '/database/Dockerfile'), dockerfile, 'utf8')
   console.log('created')
 }
