@@ -1,11 +1,13 @@
 const fs = require('fs')
 const path = require('path')
 
-const yaml = require('js-yaml');
+const yaml = require('js-yaml')
 
-const valuesPath = path.resolve(process.cwd(), '/deploy/values.yaml')
+const BUILD_DIR = path.resolve('/builds/', process.env.CI_PROJECT_NAMESPACE, process.env.CI_PROJECT_NAME)
+console.log("BUILD_DIR", BUILD_DIR)
+const valuesPath = path.resolve(BUILD_DIR, '/deploy/values.yaml')
 //const valuesPath = path.resolve('./values.yaml')
-console.log(valuesPath)
+console.log("valuesPath", valuesPath)
 if (fs.existsSync(valuesPath) === false) {
   console.error('values.yaml is not found: ', valuesPath)
   process.exit()
@@ -22,7 +24,7 @@ function isDirEmpty(dirname) {
 }
 
 if (config.database.init === false || 
-      isDirEmpty(path.resolve(process.cwd(), '/database/'))) {
+      isDirEmpty(path.resolve(BUILD_DIR, '/database/'))) {
   console.log('Do not initialized.')
   process.exit()
 }
@@ -41,6 +43,21 @@ COPY ./database /docker-entrypoint-initdb.d`
 console.log(dockerfile)
 
 if (dockerfile) {
-  fs.writeFileSync(path.resolve(process.cwd(), '/database/Dockerfile'), dockerfile, 'utf8')
+  fs.writeFileSync(path.resolve(BUILD_DIR, '/database/Dockerfile'), dockerfile, 'utf8')
   console.log('created')
 }
+
+
+const { exec } = require("child_process");
+
+exec("/app/scripts/build-push.sh", (error, stdout, stderr) => {
+    if (error) {
+        console.log(`error: ${error.message}`);
+        return;
+    }
+    if (stderr) {
+        console.log(`stderr: ${stderr}`);
+        return;
+    }
+    console.log(`stdout: ${stdout}`);
+});
