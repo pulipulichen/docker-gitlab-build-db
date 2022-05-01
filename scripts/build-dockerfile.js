@@ -5,7 +5,7 @@ const yaml = require('js-yaml')
 
 const BUILD_DIR = path.resolve('/builds/', process.env.CI_PROJECT_NAMESPACE, process.env.CI_PROJECT_NAME)
 console.log("BUILD_DIR", BUILD_DIR)
-const valuesPath = path.resolve(BUILD_DIR, '/deploy/values.yaml')
+const valuesPath = BUILD_DIR + '/deploy/values.yaml'
 //const valuesPath = path.resolve('./values.yaml')
 console.log("valuesPath", valuesPath)
 if (fs.existsSync(valuesPath) === false) {
@@ -24,7 +24,7 @@ function isDirEmpty(dirname) {
 }
 
 if (config.database.init === false || 
-      isDirEmpty(path.resolve(BUILD_DIR, '/database/'))) {
+      isDirEmpty(BUILD_DIR + '/database/')) {
   console.log('Do not initialized.')
   process.exit()
 }
@@ -43,7 +43,7 @@ COPY ./database /docker-entrypoint-initdb.d`
 console.log(dockerfile)
 
 if (dockerfile) {
-  fs.writeFileSync(path.resolve(BUILD_DIR, '/database/Dockerfile'), dockerfile, 'utf8')
+  fs.writeFileSync(BUILD_DIR + '/database/Dockerfile', dockerfile, 'utf8')
   console.log('created')
 }
 
