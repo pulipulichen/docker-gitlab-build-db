@@ -18,6 +18,6 @@ module.exports = function () {
   const valuesStr = fs.readFileSync(valuesPath, 'utf8')
   //console.log(valuesStr)
   const config = yaml.load(valuesStr)
-  //console.log(config)
+  console.log(config)
   return config
 }

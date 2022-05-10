@@ -4,7 +4,7 @@ const { exec } = require("child_process");
 module.exports = function (config) {
   //console.log(config)
   let UPDATE_TAG = "false"
-  if (config.database.persist_data === false) {
+  if (config.backup.persist_data === false) {
     UPDATE_TAG = "true"
   }
 
@@ -18,6 +18,12 @@ module.exports = function (config) {
       if (stderr) {
         console.log(`stderr: ${stderr}`);
         //resolve(`stderr: ${stdout}`)
+        if (stderr.indexOf(' not found ') > -1) {
+          reject(stderr)
+          throw Error(stderr)
+          return
+        }
+
         //reject(error)
       }
       console.log(`stdout: ${stdout}`);

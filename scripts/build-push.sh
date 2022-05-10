@@ -1,11 +1,12 @@
 REPO=$CI_PROJECT_NAME-$CI_PROJECT_NAMESPACE-database-$BUILD_DATABASE_MODULE
+echo $REPO
 TAG=$CI_COMMIT_SHORT_SHA
 
 mkdir -p ~/.docker
 cp ./webapp-build/token/quay-token.json ~/.docker/config.json
 
-if [ -f /tmp/Dockerfile ]; then
-  docker build -f /tmp/Dockerfile -t $QUAY_PREFIX/$REPO:$TAG .
+if [ -f Dockerfile ]; then
+  docker build -t $QUAY_PREFIX/$REPO:$TAG .
   docker push $QUAY_PREFIX/$REPO:$TAG
   
   echo $1
