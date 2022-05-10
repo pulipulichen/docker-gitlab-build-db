@@ -4,7 +4,7 @@ const path = require('path')
 module.exports = function (config) {
   const BUILD_DIR = path.join('/builds/', process.env.CI_PROJECT_NAMESPACE, process.env.CI_PROJECT_NAME)
 
-  let module = process.env["MODULE"]
+  let module = process.env["BUILD_DATABASE_MODULE"]
 
   let dockerImage = config.deploy.database[module]
   let dataPath = config.database[module].data_path
@@ -31,8 +31,6 @@ CMD ["/backup/build-init.sh"]
   console.log(dockerfile)
   console.log('==================')
 
-  if (dockerfile) {
-    fs.writeFileSync(BUILD_DIR + '/backup/Dockerfile', dockerfile, 'utf8')
-    console.log('created')
-  }
+  fs.writeFileSync('/tmp/Dockerfile', dockerfile, 'utf8')
+  console.log('created')
 }
