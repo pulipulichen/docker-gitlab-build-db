@@ -1,4 +1,6 @@
-TAG=20220501-2052
+TAG=20220510-1314
 
-docker build -t pudding/gitlab-build-db:$TAG .
-docker push pudding/gitlab-build-db:$TAG
+REPO=gitlab-build-db
+
+docker build -t pudding/$REPO:$TAG .
+docker push pudding/$REPO:$TAG

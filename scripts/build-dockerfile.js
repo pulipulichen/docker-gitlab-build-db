@@ -1,67 +1,24 @@
 const fs = require('fs')
 const path = require('path')
 
-const yaml = require('js-yaml')
+const LoadYAMLConfig = require('./lib/LoadYAMLConfig.js')
+const config = LoadYAMLConfig()
 
-const BUILD_DIR = path.resolve('/builds/', process.env.CI_PROJECT_NAMESPACE, process.env.CI_PROJECT_NAME)
-process.chdir(BUILD_DIR);
-console.log("BUILD_DIR", BUILD_DIR)
-const valuesPath = BUILD_DIR + '/deploy/values.yaml'
-//const valuesPath = path.resolve('./values.yaml')
-console.log("valuesPath", valuesPath)
-if (fs.existsSync(valuesPath) === false) {
-  console.error('values.yaml is not found: ', valuesPath)
-  process.exit()
-}
-const valuesStr = fs.readFileSync(valuesPath, 'utf8')
-console.log(valuesStr)
-const config = yaml.load(valuesStr)
-console.log(config)
-
-function isDirEmpty(dirname) {
-  let files = fs.readdirSync(dirname)
-  return (files.length === 0)
-}
-
+const BUILD_DIR = path.join('/webapp-build/', process.env.CI_PROJECT_NAMESPACE, process.env.CI_PROJECT_NAME)
 if (config.database.init === false || 
-      isDirEmpty(BUILD_DIR + '/database/')) {
+  fs.existsSync(BUILD_DIR + '/database/database-pvc.zip') === false) {
   console.log('Do not initialized.', )
   process.exit()
 }
 
-let dockerfile
+const UnzipDatabasePVC = require('./lib/UnzipDatabasePVC.js')
+const BuildDockerfile = require('./lib/BuildDockerfile.js')
+const PushDockerfile = require('./lib/PushDockerfile.js')
 
-if (config.database.driver === 'mysql') {
-  dockerfile = `FROM mysql:5.7.15
-COPY ./database /docker-entrypoint-initdb.d`
-}
-else if (config.database.driver === 'pgsql') {
-  dockerfile = `FROM postgres:11.14
-COPY ./database /docker-entrypoint-initdb.d`
-}
-
-console.log(dockerfile)
-
-if (dockerfile) {
-  fs.writeFileSync(BUILD_DIR + '/database/Dockerfile', dockerfile, 'utf8')
-  console.log('created')
+const main = async function () {
+  await UnzipDatabasePVC(config)
+  BuildDockerfile(config)
+  await PushDockerfile(config)
 }
 
-const { exec } = require("child_process");
-
-process.env.UPDATE_TAG=false
-if (config.presist_data === true) {
-  process.env.UPDATE_TAG=true
-}
-
-exec("/app/scripts/build-push.sh", (error, stdout, stderr) => {
-    if (error) {
-        console.log(`error: ${error.message}`);
-        return;
-    }
-    if (stderr) {
-        console.log(`stderr: ${stderr}`);
-        return;
-    }
-    console.log(`stdout: ${stdout}`);
-});
+main()

@@ -26,3 +26,5 @@ RUN npm i
 RUN mkdir -p /app/scripts
 WORKDIR /app/scripts
 COPY scripts /app/scripts/
+
+#ENTRYPOINT [ "node", "/app/scripts/build-dockerfile.js" ]
