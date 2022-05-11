@@ -1,8 +1,8 @@
-if [[ ${RESET_DATA} ]]; then
-  rm -rf ${DATA_PATH}/*
-  if [[ -e /backup/database.zip ]]; then
-    unzip /backup/database.zip -d $DATA_PATH
-  fi
+if [ ${RESET_DATA} ]; then
+  rm -rf ${DATA_PATH}/*  
 fi
 
-# 後面要接原本要執行的指令
+if [ -d /backup/database ]; then
+  [ "$(ls -A $DATA_PATH)" ] && echo "$DATA_PATH is not empty." || cp -rf /backup/database -d $DATA_PATH
+fi
+# Original Command:

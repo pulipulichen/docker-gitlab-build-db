@@ -16,6 +16,11 @@ const BuildDockerfile = require('./lib/BuildDockerfile.js')
 const PushDockerfile = require('./lib/PushDockerfile.js')
 
 const main = async function () {
+  // if (config.backup.persist_data === true) {
+  //   console.log('config.backup.persist_data is true. Update is skipped.')
+  //   return true
+  // }
+
   //await UnzipDatabasePVC(config)
   BuildDockerfile(config)
   await PushDockerfile(config)
