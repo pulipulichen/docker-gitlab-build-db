@@ -84,7 +84,7 @@ module.exports = async function (config) {
   let {USER, CMD} = Dockerfile
 
   fs.mkdirSync('./build_tmp/')
-  await ShellExec(`echo build_tmp >> .dockerignore`)
+  //await ShellExec(`echo build_tmp >> .dockerignore`)
 
   // ------------------------------------
   // 處理備份檔案問題
