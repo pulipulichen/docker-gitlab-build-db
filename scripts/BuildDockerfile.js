@@ -10,7 +10,7 @@ function setupData ({BUILD_DIR, USER}) {
   // 解壓縮
   // https://www.npmjs.com/package/unzipper
   let targetDir = `./build_tmp/data`
-  let containerBackupFolder = `/paas_data/database/`
+  let containerBackupFolder = `/paas_data/database`
 
   if (fs.existsSync(targetDir)) {
     fs.rmSync(targetDir, { recursive: true, force: true });
@@ -24,6 +24,9 @@ function setupData ({BUILD_DIR, USER}) {
     fs.createReadStream(zipPath)
       .pipe(unzipper.Extract({ path: targetDir }))
     
+    console.log('有成功解壓縮嗎？')
+    ShellExec(`ls ${targetDir}`)
+
     console.log('Unzip app.zip to', targetDir)
 
     copyCmd = `COPY ${targetDir} ${containerBackupFolder}
