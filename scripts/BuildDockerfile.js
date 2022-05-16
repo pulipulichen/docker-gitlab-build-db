@@ -129,4 +129,5 @@ RUN echo "${new Date()}"
   console.log('====================')
   console.log(`ls ./build_tmp/data`)
   await ShellExec(`ls ./build_tmp/data`)
+  console.log('====================')
 }
