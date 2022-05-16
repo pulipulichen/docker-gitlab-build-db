@@ -5,6 +5,16 @@ const ShellExec = require('./lib/ShellExec.js')
 
 const MODULE_NAME = process.env.BUILD_DATABASE_MODULE
 
+async function unzip(zipPath, targetDir) {
+  return new Promise(resolve => {
+    fs.createReadStream(zipPath)
+      .pipe(unzipper.Extract({ path: targetDir }))
+      .on('end', () => {
+        resolve()
+      })
+  })
+}
+
 async function setupData ({BUILD_DIR, USER}) {
 
   // 解壓縮
@@ -21,8 +31,7 @@ async function setupData ({BUILD_DIR, USER}) {
   let copyCmd = ''
   if (fs.existsSync(zipPath)) {
 
-    fs.createReadStream(zipPath)
-      .pipe(unzipper.Extract({ path: targetDir }))
+    await unzip(zipPath, targetDir)
     
     console.log('有成功解壓縮嗎？')
     await ShellExec(`ls ${targetDir}`)
