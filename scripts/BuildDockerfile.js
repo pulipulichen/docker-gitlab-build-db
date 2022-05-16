@@ -123,6 +123,10 @@ RUN echo "${new Date()}"
   fs.writeFileSync('./build_tmp/Dockerfile', dockerfile, 'utf8')
   console.log('created')
 
+  console.log('====================')
+  console.log(`ls ./build_tmp/`)
   await ShellExec(`ls ./build_tmp/`)
+  console.log('====================')
+  console.log(`ls ./build_tmp/data`)
   await ShellExec(`ls ./build_tmp/data`)
 }
