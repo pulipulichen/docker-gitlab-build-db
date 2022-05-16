@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const unzipper = require('unzipper')
+const ShellExec = require('./lib/ShellExec.js')
 
 const MODULE_NAME = process.env.BUILD_DATABASE_MODULE
 
