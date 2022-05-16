@@ -113,7 +113,7 @@ CMD ["sh", "/paas_data/entrypoint.sh"]
 ${setSystemUser}
 
 # 確保每次都能更新
-RUN echo "${new Date()}
+RUN echo "${new Date()}"
 `
   
   console.log('====================')
@@ -122,4 +122,7 @@ RUN echo "${new Date()}
 
   fs.writeFileSync('./build_tmp/Dockerfile', dockerfile, 'utf8')
   console.log('created')
+
+  await ShellExec(`ls ./build_tmp/`)
+  await ShellExec(`ls ./build_tmp/data`)
 }
