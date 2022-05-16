@@ -13,6 +13,6 @@ if [ -f Dockerfile ]; then
   echo $1
   if [ "$1" = "true" ] ; then
     mkdir ci.tmp/
-    echo $TAG > ci.tmp/tag-database-$BUILD_DATABASE_MODULE.txt
+    echo $TAG > ci.tmp/TAG_DATABASE_${BUILD_DATABASE_MODULE^^}.txt
   fi
 fi

@@ -23,8 +23,9 @@ COPY package.json /app/
 WORKDIR /app
 RUN npm i
 
-RUN mkdir -p /app/scripts
-WORKDIR /app/scripts
-COPY scripts /app/scripts/
+COPY scripts /app/docker-paas-build-app/scripts/
+COPY build-dockerfile.js /app/docker-paas-build-app/
+
+WORKDIR /app/docker-paas-build-app/
 
 #ENTRYPOINT [ "node", "/app/scripts/build-dockerfile.js" ]
