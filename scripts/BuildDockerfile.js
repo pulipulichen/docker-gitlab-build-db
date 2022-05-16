@@ -27,7 +27,7 @@ function setupData ({BUILD_DIR, USER}) {
     console.log('有成功解壓縮嗎？')
     ShellExec(`ls ${targetDir}`)
 
-    console.log('Unzip app.zip to', targetDir)
+    console.log(`Unzip ${zipPath} to`, targetDir)
 
     copyCmd = `COPY ${targetDir} ${containerBackupFolder}
 RUN chmod -R 777 ${containerBackupFolder}/*`
