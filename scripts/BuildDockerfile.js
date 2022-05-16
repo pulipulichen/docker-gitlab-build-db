@@ -120,7 +120,7 @@ module.exports = async function (config) {
 ENV DATA_PATH=${data_path}
 
 ${copyCmd}
-COPY ./build_temp/entrypoint.sh /paas_data/entrypoint.sh
+COPY ./build_tmp/entrypoint.sh /paas_data/entrypoint.sh
 RUN chmod 777 /paas_data/entrypoint.sh
 
 CMD ["sh", "/paas_data/entrypoint.sh"]
