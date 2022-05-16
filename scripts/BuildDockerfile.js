@@ -5,7 +5,7 @@ const ShellExec = require('./lib/ShellExec.js')
 
 const MODULE_NAME = process.env.BUILD_DATABASE_MODULE
 
-function setupData ({BUILD_DIR, USER}) {
+async function setupData ({BUILD_DIR, USER}) {
 
   // 解壓縮
   // https://www.npmjs.com/package/unzipper
@@ -25,7 +25,7 @@ function setupData ({BUILD_DIR, USER}) {
       .pipe(unzipper.Extract({ path: targetDir }))
     
     console.log('有成功解壓縮嗎？')
-    ShellExec(`ls ${targetDir}`)
+    await ShellExec(`ls ${targetDir}`)
 
     console.log(`Unzip ${zipPath} to`, targetDir)
 
@@ -91,7 +91,7 @@ module.exports = async function (config) {
 
   // ------------------------------------
   // 處理備份檔案問題
-  let {copyCmd} = setupData({BUILD_DIR, USER})
+  let {copyCmd} = await setupData({BUILD_DIR, USER})
 
   // ----------------------------------------------------
   let setSystemUser = setupUser(USER)
