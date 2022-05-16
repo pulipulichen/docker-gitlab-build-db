@@ -75,6 +75,7 @@ module.exports = async function (config) {
 
   // 這是Gitlab CI Runner的路徑
   const BUILD_DIR = path.join('/builds/', process.env.CI_PROJECT_NAMESPACE, process.env.CI_PROJECT_NAME)
+  process.chdir(BUILD_DIR)
 
   const REPO = process.env.CI_PROJECT_NAME + '-' + process.env.CI_PROJECT_NAMESPACE
   console.log("REPO: " + REPO)
@@ -103,10 +104,10 @@ module.exports = async function (config) {
 ENV DATA_PATH=${data_path}
 
 ${copyCmd}
-COPY ./build_temp/entrypoint.sh /paas_data/build-init.sh
-RUN chmod 777 /paas_data/build-init.sh
+COPY ./build_temp/entrypoint.sh /paas_data/entrypoint.sh
+RUN chmod 777 /paas_data/entrypoint.sh
 
-CMD ["sh", "/paas_data/build-init.sh"]
+CMD ["sh", "/paas_data/entrypoint.sh"]
 
 # USER 一定要最後設定
 ${setSystemUser}
