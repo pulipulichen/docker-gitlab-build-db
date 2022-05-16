@@ -18,14 +18,21 @@ RUN apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plug
 # ---------------------
 
 RUN mkdir /app
-COPY package.json /app/
-
 WORKDIR /app
+
+RUN git clone https://github.com/pulipulichen/docker-gitlab-build-db.git
+
+WORKDIR /app/docker-gitlab-build-db
+
+COPY package.json /app/docker-gitlab-build-db/
+COPY entrypoint.sh /app/docker-gitlab-build-db/
+
 RUN npm i
+#RUN npm i -g js-yaml
 
-COPY scripts /app/docker-paas-build-app/scripts/
-COPY build-dockerfile.js /app/docker-paas-build-app/
+#RUN mkdir -p /app/scripts
+#WORKDIR /app/scripts
+COPY scripts /app/docker-gitlab-build-db/scripts/
+COPY build-dockerfile.js /app/docker-gitlab-build-db/
 
-WORKDIR /app/docker-paas-build-app/
-
-#ENTRYPOINT [ "node", "/app/scripts/build-dockerfile.js" ]
+WORKDIR /app/docker-gitlab-build-db/

@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 
 const LoadYAMLConfig = require('./scripts/lib/LoadYAMLConfig.js')
-
+const MODULE_NAME = process.env.BUILD_DATABASE_MODULE
 
 // const BUILD_DIR = path.join('/webapp-build/', process.env.CI_PROJECT_NAMESPACE, process.env.CI_PROJECT_NAME)
 // if (config.database.init === false || 
@@ -28,6 +28,12 @@ const main = async function () {
   }
 
   //await UnzipDatabasePVC(config)
+  if (fs.existsSync(`./data/database-${MODULE_NAME}.zip`) === false) {
+    console.log('Data dost not exists. Remove tag.')
+    await UpdateDeployTag(config, '')
+    return false
+  }
+
   await BuildDockerfile(config)
   let tag = await PushDockerfile(config)
   await UpdateDeployTag(config, tag)
