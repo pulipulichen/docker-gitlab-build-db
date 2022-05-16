@@ -14,6 +14,7 @@ const MODULE_NAME = process.env.BUILD_DATABASE_MODULE
 //const UnzipDatabasePVC = require('./lib/UnzipDatabasePVC.js')
 const BuildDockerfile = require('./scripts/BuildDockerfile.js')
 const PushDockerfile = require('./scripts/PushDockerfile.js')
+const UpdateDeployTag = require('./scripts/UpdateDeployTag.js')
 
 const main = async function () {
   // if (config.backup.persist_data === true) {
