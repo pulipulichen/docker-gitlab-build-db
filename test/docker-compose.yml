@@ -1,0 +1,9 @@
+version: "3"
+services:
+  app:
+    build: .
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: database
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
