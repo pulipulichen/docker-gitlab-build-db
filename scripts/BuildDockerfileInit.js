@@ -90,7 +90,7 @@ module.exports = async function (config) {
   // ------------------------------------
   // 處理備份檔案問題
   // console.log('before setupData')
-  let copyCmd = await setupData({BUILD_DIR, USER, config})
+  let copyCmd = await setupData({BUILD_DIR, config})
   // console.log('after setupData')
 
   // ----------------------------------------------------
