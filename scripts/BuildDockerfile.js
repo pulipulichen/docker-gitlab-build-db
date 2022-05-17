@@ -31,11 +31,11 @@ async function setupData ({BUILD_DIR, USER}) {
   let copyCmd = ''
   if (fs.existsSync(zipPath)) {
 
-    console.log('before unzip')
+    // console.log('before unzip')
     await unzip(zipPath, targetDir)
-    console.log('after unzip')
+    // console.log('after unzip')
     
-    console.log('有成功解壓縮嗎？')
+    // console.log('有成功解壓縮嗎？')
     await ShellExec(`ls ${targetDir}`)
 
     console.log(`Unzip ${zipPath} to`, targetDir)
