@@ -105,8 +105,12 @@ module.exports = async function (config) {
   let dockerfile = `FROM ${image}
 
 ${copyCmd}
+COPY ./build_tmp/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
+CMD ["/entrypoint.sh"]
 RUN echo "${new Date()}"
+
 `
   
   console.log('====================')
