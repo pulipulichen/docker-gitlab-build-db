@@ -1,1 +1,1 @@
-mysqld --user=root
+mysqld --user=$MYSQL_USER
