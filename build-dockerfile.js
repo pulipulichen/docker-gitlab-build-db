@@ -14,6 +14,8 @@ const MODULE_NAME = process.env.BUILD_DATABASE_MODULE
 //const UnzipDatabasePVC = require('./lib/UnzipDatabasePVC.js')
 const BuildDockerfile = require('./scripts/BuildDockerfile.js')
 const PushDockerfile = require('./scripts/PushDockerfile.js')
+const BuildDockerfileInit = require('./scripts/BuildDockerfileInit.js')
+const PushDockerfileInit = require('./scripts/PushDockerfileInit.js')
 const UpdateDeployTag = require('./scripts/UpdateDeployTag.js')
 
 const main = async function () {
@@ -36,7 +38,9 @@ const main = async function () {
   }
 
   await BuildDockerfile(config)
+  await BuildDockerfileInit(config)
   let tag = await PushDockerfile(config)
+  await PushDockerfileInit(config)
   await UpdateDeployTag(config, tag)
 }
 

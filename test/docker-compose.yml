@@ -1,9 +1,41 @@
 version: "3"
 services:
-  app:
+  init:
     build: .
+    volumes:
+    - "app_tmp_vol:/database_data/:rw"
+  data:
+    image: "pudding/docker-file-manager:20220517-1450"
+    ports:
+      - "8002:80"
+    environment:
+      FM_USERNAME: "user"
+      FM_PASSWORD: "password"
+    volumes:
+      - "app_tmp_vol:/data/mysql:rw"
+    stop_grace_period: "1s"
+    depends_on:
+      - init
+  db:
+    image: "mysql:5.7.15"
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: database
       MYSQL_USER: user
       MYSQL_PASSWORD: password
+    volumes:
+    - "app_tmp_vol:/var/lib/mysql:rw"
+    stop_grace_period: "1s"
+    depends_on:
+    - init
+  # db:
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: password
+  #     MYSQL_DATABASE: database
+  #     MYSQL_USER: user
+  #     MYSQL_PASSWORD: password
+volumes:
+  app_tmp_vol:
+    driver_opts:
+      type: "tmpfs"
+      device: "tmpfs"
