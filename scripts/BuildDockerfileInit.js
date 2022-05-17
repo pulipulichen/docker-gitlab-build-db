@@ -84,7 +84,7 @@ module.exports = async function (config) {
 
   let image = 'ubuntu:22.04'
 
-  fs.mkdirSync('./build_tmp/')
+  //fs.mkdirSync('./build_tmp/')
   //await ShellExec(`echo build_tmp >> .dockerignore`)
 
   // ------------------------------------
