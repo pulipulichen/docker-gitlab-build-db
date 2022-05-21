@@ -27,6 +27,20 @@ async function getTag(config) {
   }
 }
 
+function getTagPrefix(config) {
+  let prefix = config.deploy.docker_image_tag_prefix
+
+  if (!prefix) {
+    return
+  }
+
+  prefix = prefix.toLowerCase()
+  prefix = prefix.replace(/[^a-zA-Z0-9\-]/g, "")
+
+  return prefix
+}
+
+
 async function main (config, tag) {
 
   let tmpGitPath = '/tmp/git-deploy'
@@ -45,11 +59,26 @@ async function main (config, tag) {
   await setUserNameEmail(config)
   await ShellExec(`git checkout -b ${REPO} || git checkout ${REPO}`)
 
-
   // ----------------------------------------------------------------
 
-  fs.writeFileSync(`TAG_DATABASE_${MODULE_NAME.toUpperCase()}.txt`, tag, 'utf8')
+  let remove = false
+  if (tag === '') {
+    remove = true
 
+    tag = process.env.CI_COMMIT_SHORT_SHA
+    let prefix = getTagPrefix(config)
+    if (prefix && prefix !== '') {
+      tag = prefix + '-' + tag
+    }
+  }
+
+  if (remove === false) {
+    fs.writeFileSync(`TAG_DATABASE_${MODULE_NAME.toUpperCase()}.txt`, tag, 'utf8')
+  }
+  else {
+    fs.writeFileSync(`TAG_DATABASE_${MODULE_NAME.toUpperCase()}.txt`, '', 'utf8')
+  }
+  
   // ----------------------------------------------------------------
 
   await ShellExec(`git add .`)
