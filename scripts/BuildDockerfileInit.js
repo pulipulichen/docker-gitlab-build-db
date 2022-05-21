@@ -82,7 +82,7 @@ module.exports = async function (config) {
   const REPO = process.env.CI_PROJECT_NAME + '-' + process.env.CI_PROJECT_NAMESPACE
   console.log("REPO: " + REPO)
 
-  let image = 'ubuntu:22.04'
+  let image = 'ubuntu:20.04'
 
   //fs.mkdirSync('./build_tmp/')
   //await ShellExec(`echo build_tmp >> .dockerignore`)
