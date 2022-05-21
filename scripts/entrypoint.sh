@@ -12,12 +12,14 @@ if [ -n "$RESET_MODE" ]; then
     rm -rf $DATA_PATH/*
   fi
   cp -arf /database_init/* $DATA_PATH
+  ls -la $DATA_PATH
   echo "Database is reseted."
 else
   if [ "$(ls $DATA_PATH)" ]; then
     echo "Database is not empty."
   else
     cp -arf /database_init/* $DATA_PATH
+    ls -la $DATA_PATH
     echo "Database is initialized."
   fi
 fi
