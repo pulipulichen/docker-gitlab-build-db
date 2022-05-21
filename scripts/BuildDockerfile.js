@@ -6,6 +6,7 @@ const ShellExec = require('./lib/ShellExec.js')
 const MODULE_NAME = process.env.BUILD_DATABASE_MODULE
 
 async function unzip(zipPath, targetDir) {
+  /*
   return new Promise(resolve => {
     fs.createReadStream(zipPath)
       .pipe(unzipper.Extract({ path: targetDir }))
@@ -13,6 +14,8 @@ async function unzip(zipPath, targetDir) {
         resolve()
       })
   })
+  */
+  await ShellExec(`unzip ${zipfile} -d ${targetDir}`)
 }
 
 async function setupData ({BUILD_DIR, USER, config}) {
