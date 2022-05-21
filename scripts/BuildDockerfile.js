@@ -15,7 +15,7 @@ async function unzip(zipPath, targetDir) {
       })
   })
   */
-  await ShellExec(`unzip ${zipfile} -d ${targetDir}`)
+  await ShellExec(`unzip ${zipPath} -d ${targetDir}`)
 }
 
 async function setupData ({BUILD_DIR, USER, config}) {
