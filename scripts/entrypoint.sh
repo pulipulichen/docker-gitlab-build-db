@@ -1,5 +1,5 @@
 DATA_PATH=/database_data/
-REMOTEDATA_PATH=/database_data_remote/
+REMOTE_DATA_PATH=/database_data_remote/
 # echo $DATA_PATH
 # if [ "$(ls $DATA_PATH)" ]; then
 #   echo "$DATA_PATH is not empty. Stop restore."
@@ -20,7 +20,7 @@ if [ -n "$RESET_MODE" ]; then
     rm -rf $REMOTE_DATA_PATH/*
     cp -arf /database_init/* $REMOTE_DATA_PATH
   fi
-  
+
   ls -la $DATA_PATH
   echo "Database is reseted."
 else
