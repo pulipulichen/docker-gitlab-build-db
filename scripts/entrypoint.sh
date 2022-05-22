@@ -6,7 +6,7 @@ REMOTE_DATA_PATH=/database_data_remote/
 # else
 #   cp -arf /database_init/* $DATA_PATH
 #   echo "Database is restored."
-# fi
+# fi 
 
 if [ -n "$RESET_MODE" ]; then
   if [ "$(ls $DATA_PATH)" ]; then
