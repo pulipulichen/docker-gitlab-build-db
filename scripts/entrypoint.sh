@@ -12,16 +12,29 @@ if [ -n "$RESET_MODE" ]; then
   if [ "$(ls $DATA_PATH)" ]; then
     rm -rf $DATA_PATH/*
   fi
+
+  echo "Reset data..."
   cp -arf /database_init/* $DATA_PATH
-  cp -arf /database_init/* $REMOTE_DATA_PATH
+
+  if [ -d $REMOTE_DATA_PATH ]; then
+    rm -rf $REMOTE_DATA_PATH/*
+    cp -arf /database_init/* $REMOTE_DATA_PATH
+  fi
+  
   ls -la $DATA_PATH
   echo "Database is reseted."
 else
   if [ "$(ls $DATA_PATH)" ]; then
     echo "Database is not empty."
   else
+    echo "Initialize data..."
     cp -arf /database_init/* $DATA_PATH
-    cp -arf /database_init/* $REMOTE_DATA_PATH
+
+    if [ -d $REMOTE_DATA_PATH ]; then
+      echo "Initialize data to remote..."
+      rm -rf $REMOTE_DATA_PATH/*
+      cp -arf /database_init/* $REMOTE_DATA_PATH
+    fi
     ls -la $DATA_PATH
     echo "Database is initialized."
   fi
