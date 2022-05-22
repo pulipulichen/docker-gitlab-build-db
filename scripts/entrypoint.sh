@@ -1,4 +1,5 @@
 DATA_PATH=/database_data/
+REMOTEDATA_PATH=/database_data_remote/
 # echo $DATA_PATH
 # if [ "$(ls $DATA_PATH)" ]; then
 #   echo "$DATA_PATH is not empty. Stop restore."
