@@ -1,1 +1,1 @@
-MySQL問題：build-db改成git。為什麼更新一直失敗？
+MongoDB：修改儲存空間的操作方式。
