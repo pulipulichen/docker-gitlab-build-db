@@ -51,7 +51,7 @@ module.exports = async function (config) {
     "email": ""
   }
   // fs.writeFileSync('/tmp/config.json', JSON.stringify(token), 'utf8')
-  // console.log(`token`, JSON.stringify(token))
+  console.log(`token`, JSON.stringify(token))
   // await ShellExec(`cat /tmp/config.json`)
   // await ShellExec(`mv /tmp/config.json ~/.docker/`)
 
