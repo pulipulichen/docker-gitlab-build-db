@@ -74,6 +74,7 @@ async function main (config, tag) {
 
   if (remove === false) {
     fs.writeFileSync(`TAG_DATABASE_${MODULE_NAME.toUpperCase()}.txt`, tag, 'utf8')
+    console.log(`Write ${tag} to TAG_DATABASE_${MODULE_NAME.toUpperCase()}.txt`)
   }
   else {
     fs.writeFileSync(`TAG_DATABASE_${MODULE_NAME.toUpperCase()}.txt`, '', 'utf8')
