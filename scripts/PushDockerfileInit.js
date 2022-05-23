@@ -10,7 +10,7 @@ const path = require('path')
 const MODULE_NAME = process.env.BUILD_DATABASE_MODULE
 
 function getTagPrefix(config) {
-  let prefix = config.deploy.docker_image_tag_prefix
+  let prefix = config.deploy.tag_prefix
 
   if (!prefix) {
     return
