@@ -50,10 +50,14 @@ module.exports = async function (config) {
     "auth": config.environment.build.quay_auth_token,
     "email": ""
   }
-  fs.writeFileSync('/tmp/config.json', JSON.stringify(token), 'utf8')
-  console.log(`token`, JSON.stringify(token))
-  await ShellExec(`cat /tmp/config.json`)
-  await ShellExec(`mv /tmp/config.json ~/.docker/`)
+  // fs.writeFileSync('/tmp/config.json', JSON.stringify(token), 'utf8')
+  // console.log(`token`, JSON.stringify(token))
+  // await ShellExec(`cat /tmp/config.json`)
+  // await ShellExec(`mv /tmp/config.json ~/.docker/`)
+
+  fs.writeFileSync(process.env('HOME') + '/.docker/config.json', JSON.stringify(token), 'utf8')
+  //await ShellExec(`mv /tmp/config.json ~/.docker/`)
+
 
   // ------------------------
   
