@@ -25,7 +25,7 @@ RUN git clone https://github.com/pulipulichen/docker-gitlab-build-db.git
 WORKDIR /app/docker-gitlab-build-db
 
 COPY package.json /app/docker-gitlab-build-db/
-COPY entrypoint.sh /app/docker-gitlab-build-db/
+
 
 RUN npm i
 #RUN npm i -g js-yaml
@@ -36,3 +36,5 @@ COPY scripts /app/docker-gitlab-build-db/scripts/
 COPY build-dockerfile.js /app/docker-gitlab-build-db/
 
 WORKDIR /app/docker-gitlab-build-db/
+
+COPY build-dockerfile.sh /app/docker-gitlab-build-db/
