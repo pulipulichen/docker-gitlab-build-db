@@ -1,5 +1,6 @@
 
 const ShellExec = require('./lib/ShellExec.js')
+const sleep = require('./lib/sleep.js')
 const fs = require('fs')
 const MODULE_NAME = process.env.BUILD_DATABASE_MODULE
 
@@ -41,7 +42,7 @@ function getTagPrefix(config) {
 }
 
 
-async function main (config, tag) {
+async function main (config, tag, retry = 0) {
 
   let tmpGitPath = '/tmp/git-deploy'
   fs.mkdirSync(tmpGitPath, { recursive: true})
@@ -84,7 +85,16 @@ async function main (config, tag) {
 
   await ShellExec(`git add .`)
   await ShellExec(`git commit -m "CI TAG: ${tag}" --allow-empty`)
-  await ShellExec(`git push -f ${DEPLOY_GIT_URL}`, {retry: 3})
+  try {
+    await ShellExec(`git push -f ${DEPLOY_GIT_URL}`)
+  }
+  catch (e) {
+    console.error(e) 
+    await sleep(5000)
+    fs.rm(tmpGitPath, {recursive: true})
+    retry++
+    return await main(config, tag, retry)
+  }
 }
 
 module.exports = main
