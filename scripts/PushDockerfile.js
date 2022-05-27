@@ -63,7 +63,7 @@ module.exports = async function (config) {
   
   let QUAY_PREFIX = config.environment.build.quay_prefix
   await ShellExec(`docker build -f ./build_tmp/Dockerfile -t ${QUAY_PREFIX}/${REPO}:${MODULE_NAME}-${TAG} .`)
-  await ShellExec(`docker push ${QUAY_PREFIX}/${REPO}:${MODULE_NAME}-${TAG}`)
+  await ShellExec(`docker push ${QUAY_PREFIX}/${REPO}:${MODULE_NAME}-${TAG}`, {retry: 3})
 
   // fs.mkdirSync('./ci.tmp/')
   // fs.writeFileSync('./ci.tmp/TAG_APP.txt', TAG, 'utf8')

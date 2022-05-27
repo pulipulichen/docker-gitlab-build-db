@@ -37,4 +37,4 @@ COPY build-dockerfile.js /app/docker-gitlab-build-db/
 
 WORKDIR /app/docker-gitlab-build-db/
 
-COPY build-dockerfile.sh /app/docker-gitlab-build-db/
+COPY build-dockerfile.* /app/docker-gitlab-build-db/
