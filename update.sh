@@ -4,4 +4,4 @@ rm -rf *.sh *.js scripts
 git reset --hard
 git pull
 cd $CURRENT_DIR
-ls
+ls 
