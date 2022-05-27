@@ -40,14 +40,20 @@ const main = async function () {
   }
 
   await WaitForLock.lock('db-build-dockerfile')
+  try {
+    await BuildDockerfile(config)
+    await BuildDockerfileInit(config)
+    let tag = await PushDockerfile(config)
+    await PushDockerfileInit(config)
+    await UpdateDeployTag(config, tag)
+  }
+  catch (e) {
+    await WaitForLock.unlock('db-build-dockerfile')
+    throw e
+  }
+    
 
-  await BuildDockerfile(config)
-  await BuildDockerfileInit(config)
-  let tag = await PushDockerfile(config)
-  await PushDockerfileInit(config)
-  await UpdateDeployTag(config, tag)
-
-  await WaitForLock.unlock('db-build-dockerfile')
+  
 }
 
 main()
