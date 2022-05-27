@@ -51,9 +51,7 @@ const main = async function () {
     await WaitForLock.unlock('db-build-dockerfile')
     throw e
   }
-    
-
-  
+  await WaitForLock.unlock('db-build-dockerfile')
 }
 
 main()
