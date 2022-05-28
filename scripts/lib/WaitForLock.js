@@ -31,7 +31,7 @@ async function waitForLock (keySuffix = '', retry = 0) {
   let result = await axios.get(`${api}?key=${key}&name=${name}&timeout=${timeout}&cocurrent=${cocurrent}&action=query`)
   let data = result.data.result
   
-  console.log(data)
+  // console.log(data)
 
   if (queryPassed.indexOf(data) === -1) {
     if (retry === 500) {
