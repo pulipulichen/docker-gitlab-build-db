@@ -32,7 +32,8 @@ RUN npm i
 
 #RUN mkdir -p /app/scripts
 #WORKDIR /app/scripts
-COPY scripts /app/docker-gitlab-build-db/
+RUN echo "20220602-1922"
+COPY scripts/* /app/docker-gitlab-build-db/scripts/
 #COPY build-dockerfile.js  /app/docker-gitlab-build-db/
 
 WORKDIR /app/docker-gitlab-build-db/
