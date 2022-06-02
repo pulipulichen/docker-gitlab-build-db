@@ -20,6 +20,7 @@ RUN apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plug
 RUN mkdir /app
 WORKDIR /app
 
+RUN echo "20220602-1925"
 RUN git clone https://github.com/pulipulichen/docker-gitlab-build-db.git
 
 WORKDIR /app/docker-gitlab-build-db
