@@ -8,7 +8,7 @@ axiosRetry(axios, { retryDelay: (retryCount) => {
     return retryCount * 1000;
 }})
 
-let api = `https://script.google.com/macros/s/AKfycbwjjDjwVN1tyW85by9I4ag9gcI_qy0jNb4M7E4VP_dTUs-7HpSCGoFINUSdygcxGQrm/exec`
+let api = `https://script.google.com/macros/s/AKfycbwZm5bWxDDvmvja83XUUozFEdJy3SlaOEymz6IJVtgrqape23LpqpR3nrKWPBkBgwVE/exec`
 let view = `https://docs.google.com/spreadsheets/d/11U6a_gZTz0Gq3nmO2e_1qfLkhqd9Q70j5M1COzndKZA/edit?usp=sharing`
 
 let queryPassed = ['added', 'reset', 'timeout', 'existed']
@@ -48,7 +48,13 @@ wait for ${10*(retry + 1)} seconds ... ` + retry + ` ${new Date() + ''}
   Check ${view}
 
 `)
-    await sleep(10000 * (retry + 1))
+
+
+    let ms = 10000 * (retry + 1)
+    if (ms > 180000) {
+      ms = 180000
+    }
+    await sleep(ms)
 
     retry++
     return await waitForLock(keySuffix, retry)
