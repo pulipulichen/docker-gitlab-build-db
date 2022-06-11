@@ -3,6 +3,7 @@ const ShellExec = require('./lib/ShellExec.js')
 const sleep = require('./lib/sleep.js')
 const fs = require('fs')
 const MODULE_NAME = process.env.BUILD_DATABASE_MODULE
+const getTagPrefix = require('./lib/getTagPrefix.js')
 
 function getRepoName (config) {
   const DEPLOY_GIT_URL = config.environment.build.deploy_git_url
@@ -27,20 +28,6 @@ async function getTag(config) {
     tag = prefix + '-' + tag
   }
 }
-
-function getTagPrefix(config) {
-  let prefix = config.deploy.tag_prefix
-
-  if (!prefix) {
-    return
-  }
-
-  prefix = prefix.toLowerCase()
-  prefix = prefix.replace(/[^a-zA-Z0-9\-]/g, "")
-
-  return prefix
-}
-
 
 async function main (config, tag, retry = 0) {
 
@@ -67,7 +54,7 @@ async function main (config, tag, retry = 0) {
     remove = true
 
     tag = process.env.CI_COMMIT_SHORT_SHA
-    let prefix = getTagPrefix(config)
+    let prefix = await getTagPrefix()
     if (prefix && prefix !== '') {
       tag = prefix + '-' + tag
     }

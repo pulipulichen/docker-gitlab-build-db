@@ -31,6 +31,12 @@ const main = async function () {
     console.log('Build is disabled.')
     return
   }
+  
+  const project_archive = config.project_archive
+  if (project_archive === true) {
+    console.log('Project is archived.') 
+    return false
+  }
 
   //await UnzipDatabasePVC(config)
   if (fs.existsSync(`./data/database-${MODULE_NAME}.zip`) === false) {

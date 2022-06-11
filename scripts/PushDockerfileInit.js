@@ -6,21 +6,9 @@
 const ShellExec = require('./lib/ShellExec.js')
 const fs = require('fs')
 const path = require('path')
+const getTagPrefix = require('./lib/getTagPrefix')
 
 const MODULE_NAME = process.env.BUILD_DATABASE_MODULE
-
-function getTagPrefix(config) {
-  let prefix = config.deploy.tag_prefix
-
-  if (!prefix) {
-    return
-  }
-
-  prefix = prefix.toLowerCase()
-  prefix = prefix.replace(/[^a-zA-Z0-9\-]/g, "")
-
-  return prefix
-}
 
 module.exports = async function (config) {
   if (fs.existsSync('./build_tmp/DockerfileInit') === false) {
@@ -32,7 +20,7 @@ module.exports = async function (config) {
   console.log(`QUAY REPO: ${REPO}`)
 
   let TAG = process.env.CI_COMMIT_SHORT_SHA
-  let prefix = getTagPrefix(config)
+  let prefix = await getTagPrefix()
   if (prefix && prefix !== '') {
     TAG = prefix + '-' + TAG
   }
