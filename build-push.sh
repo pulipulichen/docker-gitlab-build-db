@@ -1,4 +1,4 @@
-TAG=20220610-1504
+TAG=20220611-2338
 
 REPO=gitlab-build-db
 
