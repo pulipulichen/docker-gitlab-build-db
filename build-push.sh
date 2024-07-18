@@ -1,7 +1,10 @@
-TAG=20220611-2338
+TAG=20240718-1704
 
 REPO=gitlab-build-db
 
-docker build -t pudding/$REPO:$TAG .
+docker-compose build
+
+docker tag docker-gitlab-build-db-app pudding/$REPO:$TAG
+
 docker push pudding/$REPO:$TAG
 docker rmi pudding/$REPO:$TAG

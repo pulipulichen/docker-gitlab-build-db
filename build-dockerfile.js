@@ -18,7 +18,7 @@ const BuildDockerfileInit = require('./scripts/BuildDockerfileInit.js')
 const PushDockerfileInit = require('./scripts/PushDockerfileInit.js')
 const UpdateDeployTag = require('./scripts/UpdateDeployTag.js')
 
-const WaitForLock = require('./scripts/lib/WaitForLock.js')
+// const WaitForLock = require('./scripts/lib/WaitForLock.js')
 
 const main = async function () {
   // if (config.backup.persist_data === true) {
@@ -45,7 +45,7 @@ const main = async function () {
     return false
   }
 
-  await WaitForLock.lock('db-build-dockerfile')
+  // await WaitForLock.lock('db-build-dockerfile')
   try {
     await BuildDockerfile(config)
     await BuildDockerfileInit(config)
@@ -54,10 +54,10 @@ const main = async function () {
     await UpdateDeployTag(config, tag)
   }
   catch (e) {
-    await WaitForLock.unlock('db-build-dockerfile')
+    // await WaitForLock.unlock('db-build-dockerfile')
     throw e
   }
-  await WaitForLock.unlock('db-build-dockerfile')
+  // await WaitForLock.unlock('db-build-dockerfile')
 }
 
 main()
